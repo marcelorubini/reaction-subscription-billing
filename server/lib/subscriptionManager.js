@@ -11,15 +11,15 @@ export const SubscriptionManager = function (name) {
     }
 
     return {
-        createSubscription: function (customer,paramsHash) {
-            let subscription= getAdapter().createSubscription(customer,paramsHash );
-            let subscriptionReceipt=
+        createSubscription: function (customer, paramsHash) {
+            let subscription = getAdapter().createSubscription(customer, paramsHash);
+            let subscriptionReceipt =
                 { id: subscription.id,
                   userId: paramsHash.user._id,
                   nextBillingDate: new Date(1000 * subscription.current_period_end),
                 }
             logger.info("Subscription:", JSON.stringify(subscription));
-            logger.info("Subscription Receipt",subscriptionReceipt);
+            logger.info("Subscription Receipt", subscriptionReceipt);
             Subscriptions.insert(subscriptionReceipt);
           //Todo decide on returning gateway response or new object
           return subscription;
@@ -27,11 +27,8 @@ export const SubscriptionManager = function (name) {
         fetchTransaction: function (transactionId) {
             return getAdapter().fetchTransaction(transactionId);
         },
-        fetchCustomer: function (customerId){
+        fetchCustomer: function (customerId) {
             return getAdapter().fetchCustomer(customerId);
        }
  }
 }
-
-
-
